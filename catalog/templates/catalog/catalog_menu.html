@@ -1,0 +1,22 @@
+{% load mptt_tags %}
+
+{% for genre,structure in catalog|tree_info:"ancestors" %}
+    {% if not structure.ancestors and not structure.closed_levels %}<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="{{ genre.get_absolute_url }}" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {% elif not structure.ancestors and structure.closed_levels %}<li class="nav-item"><a class="nav-link" href="{{ genre.get_absolute_url }}">
+    {% elif structure.new_level and structure.ancestors %}<div class="dropdown-menu" aria-labelledby="dropdown01"><a class="dropdown-item" href="{{ genre.get_absolute_url }}">
+    {% elif structure.ancestors%}<a class="dropdown-item" href="{{ genre.get_absolute_url }}">
+    {% endif %}
+        {{ genre.name }}</a>
+    {% for level in structure.closed_levels %}
+        {% if structure.ancestors%}</div>
+        {% else %}</li>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+
+
+
+
+
+
